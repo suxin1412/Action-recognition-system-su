@@ -1,0 +1,298 @@
+C51 COMPILER V9.60.0.0   MPU9250                                                           11/09/2020 11:26:38 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MPU9250
+OBJECT MODULE PLACED IN .\Objects\MPU9250.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE User\MPU9250.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\L
+                    -istings\MPU9250.lst) TABS(2) OBJECT(.\Objects\MPU9250.obj)
+
+line level    source
+
+   1          #include <STC15F2K60S2.H>
+   2          #include "intrins.h"
+   3          #include "MPU9250.h"
+   4          //****************************************
+   5          //    IICǰʼхۅ
+   6          //    עúǰʼхۅǰìSCLۍSDAΪٟ
+   7          //        ǰʼӔ۳ìSCLۍSDAΪ֍
+   8          //****************************************
+   9          uint16_t accelX;
+  10          uint16_t accelY;
+  11          uint16_t accelZ;
+  12          uint16_t gyroX;
+  13          uint16_t gyroY;
+  14          uint16_t gyroZ;
+  15          uint16_t magX;
+  16          uint16_t magY;
+  17          uint16_t magZ;
+  18          uint8_t  ASAX;
+  19          uint8_t  ASAY;
+  20          uint8_t  ASAZ;
+  21          
+  22          
+  23          void iic_mpu_start(void) 
+  24          {
+  25   1        MPU_SCL = 1;
+  26   1        MPU_SDA = 1;
+  27   1        NOP_MPU();
+  28   1        MPU_SDA = 0;
+  29   1        NOP_MPU();
+  30   1        MPU_SCL = 0;
+  31   1      }
+  32          
+  33          //****************************************
+  34          //    IICޡ˸хۅ
+  35          //    עúޡ˸хۅǰìѨҪѣ֤SCLۍSDAΪ֍
+  36          //        ޡ˸Ӕ۳ìSCLۍSDAΪٟ
+  37          //****************************************
+  38          void iic_mpu_end(void)
+  39          {
+  40   1        MPU_SCL = 0;
+  41   1        MPU_SDA = 0;
+  42   1        NOP_MPU();
+  43   1        MPU_SDA = 1;
+  44   1        NOP_MPU();
+  45   1        MPU_SCL = 1;
+  46   1      }
+  47          
+  48          
+  49          //****************************************
+  50          //    ׁӦհ
+  51          //    עúǰìѨҪѣ֤SCLۍSDAΪ֍
+  52          //        ۳ìSCLۍSDAΪ֍
+  53          //****************************************
+  54          bit iic_mpu_read_echo(void)
+C51 COMPILER V9.60.0.0   MPU9250                                                           11/09/2020 11:26:38 PAGE 2   
+
+  55          {
+  56   1        NOP_MPU();
+  57   1        MPU_SCL = 1;
+  58   1        F0 = MPU_SDA;
+  59   1        NOP_MPU();
+  60   1        MPU_SCL = 0;
+  61   1        return F0;
+  62   1      }
+  63          //****************************************
+  64          //    дӦհ
+  65          //    עúǰìѨҪѣ֤SCLۍSDAΪ֍
+  66          //        ۳ìSCLۍSDAΪ֍
+  67          //****************************************
+  68          void iic_mpu_write_echo(bit ack)
+  69          {
+  70   1        MPU_SDA = ack;
+  71   1        NOP_MPU();
+  72   1        MPU_SCL = 1;
+  73   1        NOP_MPU();
+  74   1        NOP_MPU();
+  75   1        MPU_SCL = 0;
+  76   1      }
+  77          //****************************************
+  78          //    IICׁыλèһؖޚé
+  79          //    עúǰìѨҪѣ֤SCLۍSDAΪ֍
+  80          //        ۳ìSCLۍSDAΪ֍
+  81          //****************************************
+  82          unsigned char iic_mpu_read_byte(void)
+  83          {
+  84   1        unsigned char dat=0,i;
+  85   1        MPU_SDA = 1;//ˍ؅˽ߝ؜П
+  86   1        for (i=0;i<8;i++)
+  87   1        {
+  88   2          dat = dat << 1;
+  89   2          NOP_MPU();                    //ٸՓܺʱݤضԶ״Ӧ
+  90   2          MPU_SCL = 1;
+  91   2          dat = dat|MPU_SDA;
+  92   2          NOP_MPU();
+  93   2          MPU_SCL = 0;
+  94   2        }
+  95   1        return dat;
+  96   1      }
+  97          //****************************************
+  98          //    IICдыλèһؖޚé
+  99          //    עúǰìѨҪѣ֤SCLۍSDAΪ֍
+ 100          //        ۳ìSCLۍSDAΪ֍
+ 101          //****************************************
+ 102          void iic_mpu_write_byte(unsigned char dat)
+ 103          {
+ 104   1        unsigned char i;
+ 105   1        for (i=0;i<8;i++)
+ 106   1        {
+ 107   2          dat<<=1;
+ 108   2          MPU_SDA = CY;
+ 109   2          NOP_MPU();
+ 110   2          MPU_SCL = 1;
+ 111   2          NOP_MPU();
+ 112   2          NOP_MPU();
+ 113   2          MPU_SCL = 0;
+ 114   2          NOP_MPU();
+ 115   2        }
+ 116   1        iic_mpu_read_echo();
+C51 COMPILER V9.60.0.0   MPU9250                                                           11/09/2020 11:26:38 PAGE 3   
+
+ 117   1      }
+ 118          //****************************************
+ 119          //    IICָׁ֨λ׃èaddréք˽ߝ
+ 120          //****************************************
+ 121          unsigned char iic_mpu_read_data(unsigned char addr)
+ 122          {
+ 123   1        unsigned char REG_data;
+ 124   1        iic_mpu_start();                   //ǰʼхۅ
+ 125   1        iic_mpu_write_byte(SlaveAddress);    //ע̍ʨѸַ֘+дхۅ
+ 126   1        iic_mpu_write_byte(addr);     //ע̍զԢեԪַ֘ìՓ0ߪʼ 
+ 127   1        iic_mpu_start();                   //ǰʼхۅ
+ 128   1        iic_mpu_write_byte(SlaveAddress+1);  //ע̍ʨѸַ֘+ׁхۅ
+ 129   1        REG_data=iic_mpu_read_byte();       //ׁԶ݄զǷ˽ߝ
+ 130   1        iic_mpu_write_echo(1);                //Ӧհхۅ
+ 131   1        iic_mpu_end();                    //ֹͣхۅ
+ 132   1        return REG_data;
+ 133   1      }
+ 134          //****************************************
+ 135          //    IICд˽ߝսָ֨λ׃èaddré
+ 136          //****************************************
+ 137          void iic_mpu_write_data(unsigned char Address,unsigned char dat)
+ 138          {
+ 139   1          iic_mpu_start();                    //ǰʼхۅ
+ 140   1          iic_mpu_write_byte(SlaveAddress+0); //ע̍ʨѸַ֘+дхۅ
+ 141   1          iic_mpu_write_byte(Address);    //Śҿ݄զǷַ֘ì
+ 142   1          iic_mpu_write_byte(dat);       //Śҿ݄զǷ˽ߝì
+ 143   1          iic_mpu_end();                      //עֹ̍ͣхۅ
+ 144   1      }
+ 145          
+ 146          void Delay200us()   //@20.000MHz
+ 147          {
+ 148   1        unsigned char i, j, k;
+ 149   1      
+ 150   1        _nop_();
+ 151   1        _nop_();
+ 152   1        i = 1;
+ 153   1        j = 195;
+ 154   1        k = 136;
+ 155   1        do
+ 156   1        {
+ 157   2          do
+ 158   2          {
+ 159   3            while (--k);
+ 160   3          } while (--j);
+ 161   2        } while (--i);
+ 162   1      }
+ 163          // 地磁计的iic专用函数
+ 164          unsigned char AK8963_ReadReg(unsigned char addr)
+ 165          {
+ 166   1        unsigned char REG_data;
+ 167   1        iic_mpu_write_data(INT_PIN_CFG ,0x02);
+ 168   1        iic_mpu_start();
+ 169   1        iic_mpu_write_byte(MPU9250_AK8963_ADDR);
+ 170   1        iic_mpu_write_byte(addr);
+ 171   1        iic_mpu_start();
+ 172   1        iic_mpu_write_byte(MPU9250_AK8963_ADDR+1);
+ 173   1        REG_data=iic_mpu_read_byte();
+ 174   1        iic_mpu_write_echo(1);
+ 175   1        iic_mpu_end();
+ 176   1        return REG_data;
+ 177   1      }
+ 178          void AK8963_WriteReg(unsigned char Address,unsigned char dat)
+C51 COMPILER V9.60.0.0   MPU9250                                                           11/09/2020 11:26:38 PAGE 4   
+
+ 179          {
+ 180   1        iic_mpu_write_data(INT_PIN_CFG ,0x02);
+ 181   1        iic_mpu_start();
+ 182   1        iic_mpu_write_byte(MPU9250_AK8963_ADDR+0);
+ 183   1        iic_mpu_write_byte(Address);
+ 184   1        iic_mpu_write_byte(dat);
+ 185   1        iic_mpu_end();
+ 186   1      }
+ 187          
+ 188          void MPU_Init()
+ 189          {
+ 190   1        unsigned char i = 8, j = 154, k = 122;
+ 191   1        iic_mpu_write_data(PWR_MGMT_1, 0x80);     //复位-重置所有寄存器
+ 192   1        do
+ 193   1        {
+ 194   2          do
+ 195   2          {
+ 196   3            while (--k);
+ 197   3          } while (--j);
+ 198   2        } while (--i);  //延时保证正常
+ 199   1      ///*******************Init GYRO and ACCEL******************************/  
+ 200   1        iic_mpu_write_data(CONFIG, 0x07);      //低通滤波频率，典型值：0x07(3600Hz)此寄存器内决�
+             -��Internal_Sample_Rate==8K
+ 201   1        iic_mpu_write_data(SMPLRT_DIV, 0x07);  //陀螺仪采样率，典型值：0x07(1kHz) (SAMPLE_RATE= Intern
+             -al_Sample_Rate / (1 + SMPLRT_DIV) )
+ 202   1        iic_mpu_write_data(GYRO_CONFIG, 0x18); //陀螺仪自检及测量范围，典型值：0x18(不自检，20
+             -00deg/s)
+ 203   1        iic_mpu_write_data(ACCEL_CONFIG_2, 0x08);//加速计高通滤波频率 典型值 ：0x08  （1.13kHz） 
+ 204   1        iic_mpu_write_data(ACCEL_CONFIG, 0x10);//加速计自检、测量范围及高通滤波频率，典型值�
+             -��0x00/+-2g. 0x08/+-4g. 0x10/+-8g. 0x18(不自检，16G)
+ 205   1        AK8963_WriteReg(AK8963_CNTL1_REG,0x16); //16bit 连续测量模式2
+ 206   1      }
+ 207          void MPU_Read6Axis(void)
+ 208          {
+ 209   1        unsigned char H,L;
+ 210   1        H=iic_mpu_read_data(ACCEL_XOUT_H);
+ 211   1        L=iic_mpu_read_data(ACCEL_XOUT_L);
+ 212   1        accelX =  ((H<<8)+L);
+ 213   1        H=iic_mpu_read_data(ACCEL_YOUT_H);
+ 214   1        L=iic_mpu_read_data(ACCEL_YOUT_L);
+ 215   1        accelY =  ((H<<8)+L);
+ 216   1        H=iic_mpu_read_data(ACCEL_ZOUT_H);
+ 217   1        L=iic_mpu_read_data(ACCEL_ZOUT_L);
+ 218   1        accelZ =  ((H<<8)+L);
+ 219   1        H=iic_mpu_read_data(GYRO_XOUT_H);
+ 220   1        L=iic_mpu_read_data(GYRO_XOUT_L);
+ 221   1        gyroX =  ((H<<8)+L);
+ 222   1        H=iic_mpu_read_data(GYRO_YOUT_H);
+ 223   1        L=iic_mpu_read_data(GYRO_YOUT_L);
+ 224   1        gyroY =  ((H<<8)+L);
+ 225   1        H=iic_mpu_read_data(GYRO_ZOUT_H);
+ 226   1        L=iic_mpu_read_data(GYRO_ZOUT_L);
+ 227   1        gyroZ =  ((H<<8)+L);
+ 228   1      }
+ 229          
+ 230          unsigned char MPU_ReadRegister(unsigned char addr){
+ 231   1        return iic_mpu_read_data(addr);
+ 232   1      }
+ 233          unsigned char AK8963_ReadRegister(unsigned char addr){
+ 234   1        return AK8963_ReadReg(addr);
+ 235   1      }
+ 236          
+C51 COMPILER V9.60.0.0   MPU9250                                                           11/09/2020 11:26:38 PAGE 5   
+
+ 237          /**********************磁力计读取***************************/
+ 238          //i2c_Mag_read(AK8963_ST2_REG) 此步读取不可省略???
+ 239          //数据读取结束寄存器，reading this register means data reading end
+ 240          //AK8963_ST2_REG 同时具有数据非正常溢出检测功能
+ 241          //详情参考 MPU9250 PDF
+ 242          /**********************************************************/
+ 243          #define i2c_Mag_read AK8963_ReadReg
+ 244          void MPU_ReadMag(void)
+ 245          {
+ 246   1        uint8_t L,H;
+ 247   1        AK8963_WriteReg(AK8963_CNTL1_REG,0x16);
+ 248   1        Delay200us();
+ 249   1        L=i2c_Mag_read(MAG_XOUT_L);
+ 250   1        H=i2c_Mag_read(MAG_XOUT_H);
+ 251   1        magX = ((H<<8)+L);
+ 252   1        L=i2c_Mag_read(MAG_YOUT_L);
+ 253   1        H=i2c_Mag_read(MAG_YOUT_H);
+ 254   1        magY = ((H<<8)+L);
+ 255   1        L=i2c_Mag_read(MAG_ZOUT_L);
+ 256   1        H=i2c_Mag_read(MAG_ZOUT_H);
+ 257   1        magZ = ((H<<8)+L);
+ 258   1        ASAX=i2c_Mag_read(AK8963_ASAX);// X轴灵敏度调整值
+ 259   1        ASAY=i2c_Mag_read(AK8963_ASAY);
+ 260   1        ASAZ=i2c_Mag_read(AK8963_ASAZ);          
+ 261   1      }
+ 262          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    702    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     21    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

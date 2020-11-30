@@ -1,0 +1,66 @@
+#include <STC15F2K60S2.H>
+#include "MPU9250.h"
+#include "TypeDefine.h"
+
+sbit SCL = P1^3;
+sbit SDA = P1^4;
+sbit INT = P1^5;
+sbit FSYNC = P5^5;
+sbit NCS = P5^4;
+void IIC_Delay()
+{
+	uint_8 delayStep = 30;
+	while (delayStep--);
+}
+/*****************
+ * 执行前：SCL = SDA = 高
+ * 执行后：SCL = SDA = 低
+ *****************/
+void IIC_Start()
+{
+	SDA = 1;
+	SCL = 1;
+	IIC_Delay();
+	SDA = 0;
+	IIC_Delay();
+	SCL = 0;
+	IIC_Delay();
+}
+/*****************
+ * 发送1byte数据
+ * 先决：执行IIC_Start
+ * 执行前：SCL = SDA = 低
+ * 执行后：SCL = SDA = 低
+ *****************/
+void IIC_SendByte(uint_8 _data_)
+{
+	uint_8 temp = 8;
+	while (temp--){
+		if (_data_ & 0x80)
+			SDA = 1;
+		IIC_Delay();
+		SCL = 1;
+		IIC_Delay();
+		SCL = 0;
+		IIC_Delay();
+		SDA = 0;
+		IIC_Delay();
+		_data_<<=1;
+	}
+}
+/*****************
+ * 接收1byte数据
+ * 先决：执行IIC_Start
+ * 执行前：SCL = SDA = 低
+ * 执行后：SCL = SDA = 低
+ *****************/
+uint_8 IIC_ReadByte()
+{
+	uint_8 temp = 8;
+	uint_8 ReceiveData = 0;
+	while (temp--){
+		ReceiveData <<= 1;
+		
+	}
+	return ReceiveData;
+}

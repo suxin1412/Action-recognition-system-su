@@ -1,0 +1,176 @@
+
+<script src="../src/controller/echarts.js"></script>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md8">
+      <div class="layui-row layui-col-space15"> 
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div id="main" style="width: 100%;height:250px;"></div>
+            </div>
+          </div>
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div id="gyro" style="width: 100%;height:250px;"></div>
+            </div>
+          </div>
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div id="mag" style="width: 100%;height:250px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md4">
+      <div class="layui-row layui-col-space15"> 
+        <div class="layui-col-md12">
+
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <fieldset class="layui-elem-field layui-field-title" style="margin-top: 15px;">
+                <legend>滤波控制</legend>
+              </fieldset>
+              <div style="margin: 1rem 2rem;">加速度</div>
+              <div id="FilterSlideTestACC" style="margin: 1rem 2rem;"></div>
+              <div style="margin: 1rem 2rem;">角速度</div>
+              <div id="FilterSlideTestGYR" style="margin: 1rem 2rem;"></div>
+              <div style="margin: 1rem 2rem;">磁力计</div>
+              <div id="FilterSlideTestMAG" style="margin: 1rem 2rem;"></div>
+            </div>
+          </div>
+          
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <fieldset class="layui-elem-field layui-field-title" style="margin-top: 15px;">
+                <legend>动作录制</legend>
+              </fieldset>
+              <div  style="text-align:center;">
+                <div id="recardBtm_begin" style="margin-bottom: 10px;">
+                  <svg t="1605667305409" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4026" width="64" height="64"><path d="M512 512m-279.272727 0a279.272727 279.272727 0 1 0 558.545454 0 279.272727 279.272727 0 1 0-558.545454 0Z" fill="#F56C6C" p-id="4027"></path><path d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512z m0-930.909091a418.909091 418.909091 0 1 0 418.909091 418.909091 418.909091 418.909091 0 0 0-418.909091-418.909091z" fill="#606266" p-id="4028"></path></svg>
+                </div>
+                <div id="recardBtm_stop" hidden="true" style="margin-bottom: 10px;">
+                  <svg t="1605685427256" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12858" width="64" height="64"><path d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z" fill="#EE827F" p-id="12859"></path><path d="M512 512m-443.191534 0a443.191534 443.191534 0 1 0 886.383068 0 443.191534 443.191534 0 1 0-886.383068 0Z" fill="#E64537" p-id="12860"></path><path d="M0 512C0 794.638448 229.180952 1023.8194 512 1023.8194V0C229.180952 0 0 229.180952 0 512z" fill="#FEFFFF" opacity=".1" p-id="12861"></path><path d="M477.866667 683.208466H375.647266c-1.083598 0-1.986596-0.902998-1.986596-1.986597V342.597531c0-1.083598 0.902998-1.986596 1.986596-1.986596h102.4c1.083598 0 1.986596 0.902998 1.986596 1.986596v338.443739c-0.1806 1.264198-1.083598 2.167196-2.167195 2.167196zM648.352734 683.208466h-102.4c-1.083598 0-1.986596-0.902998-1.986596-1.986597V342.597531c0-1.083598 0.902998-1.986596 1.986596-1.986596H648.352734c1.083598 0 1.986596 0.902998 1.986596 1.986596v338.443739c0 1.264198-0.902998 2.167196-1.986596 2.167196z" fill="#FFFFFF" p-id="12862"></path></svg>
+                </div>
+                <span id="recardText" style="font-size: 20px;">录制未开始</span>
+                <hr>
+              </div>
+              <div style="text-align:center;font-size:7px">
+                按 <span class="layui-badge-rim layui-bg-gray">1</span> 录制抬起手臂
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">2</span> 录制放下手臂
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">3</span> 录制右滚手腕
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">4</span> 录制左滚手腕
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">5</span> 录制左移手臂
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">6</span> 录制右移手臂
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">7</span> 录制手臂向右回正
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">8</span> 录制手臂向左回正
+                <br>
+                按 <span class="layui-badge-rim layui-bg-gray">Q</span> 停止录制
+                <br>
+              </div>
+              <!-- <button onclick="CallModel()">***</button> -->
+            </div>
+          </div>
+          <div class="layui-card">
+            <div class="layui-card-body" style="text-align:center;">
+              <fieldset class="layui-elem-field layui-field-title" style="margin-top: 15px;">
+                <legend>识别</legend>
+              </fieldset>
+              <button id="ActionRecognition" class="layui-btn layui-btn-radius layui-btn-normal" onclick="ActionRecognition_start()">开始动作</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script src="../src/controller/9250.js"></script>
+
+<!-- <script type="text/javascript">
+layui.use('slider', function(){
+  var slider = layui.slider;
+  //渲染
+  slider.render({
+    elem: '#FilterSlideTestACC'  //绑定元素
+    ,value: 999
+    ,min:10
+    ,max:999
+    ,change:(value)=>{
+      console.log(value);
+      xmlhttpFC=new XMLHttpRequest();
+      xmlhttpFC.open("GET",`http:\\\\10.102.24.217:2333\\config?FC=A${value}`,true);
+      xmlhttpFC.send();
+    }
+  });
+  slider.render({
+    elem: '#FilterSlideTestGYR'  //绑定元素
+    ,value: 999
+    ,min:10
+    ,max:999
+    ,change:(value)=>{
+      console.log(value);
+      xmlhttpFC=new XMLHttpRequest();
+      xmlhttpFC.open("GET",`http:\\\\10.102.24.217:2333\\config?FC=G${value}`,true);
+      xmlhttpFC.send();
+    }
+  });
+  slider.render({
+    elem: '#FilterSlideTestMAG'  //绑定元素
+    ,value: 999
+    ,min:10
+    ,max:999
+    ,change:(value)=>{
+      console.log(value);
+      xmlhttpFC=new XMLHttpRequest();
+      xmlhttpFC.open("GET",`http:\\\\10.102.24.217:2333\\config?FC=M${value}`,true);
+      xmlhttpFC.send();
+    }
+  });
+});
+document.onkeydown = (e)=>{
+  var keyCode = e.keyCode || e.which || e.charCode;
+  if (keyCode<49||keyCode>56) if (keyCode!=81) return;
+  var btmBegin = document.getElementById("recardBtm_begin");
+  var btmStop = document.getElementById("recardBtm_stop");
+  if (keyCode<49||keyCode>56){
+    btmBegin.hidden = true;
+    btmStop.hidden = false;
+  }else{
+    btmBegin.hidden = false;
+    btmStop.hidden = true;
+  }
+  xmlhttpFC=new XMLHttpRequest();
+  xmlhttpFC.open("GET",`http:\\\\10.102.24.217:2333\\config?AC=M${keyCode}`,true);
+  xmlhttpFC.send();
+};
+</script> -->
+
+<script>
+//加载 controller 目录下的对应模块
+/*
+
+  小贴士：
+    这里 console 模块对应 的 console.js 并不会重复加载，
+    然而该页面的视图则是重新插入到容器，那如何保证能重新来控制视图？有两种方式：
+      1): 借助 layui.factory 方法获取 console 模块的工厂（回调函数）给 layui.use
+      2): 直接在 layui.use 方法的回调中书写业务代码，即:
+          layui.use('console', function(){ 
+            //同 console.js 中的 layui.define 回调中的代码 
+          });
+          
+  这里我们采用的是方式1。其它很多视图中采用的其实都是方式2，因为更简单些，也减少了一个请求数。
+  
+*/
+layui.use('console', layui.factory('console'));
+</script>
+

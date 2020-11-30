@@ -1,0 +1,658 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/09/2020  11:26:38  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5_C51\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\Bluetooth.obj, .\Objects\MPU9250.obj TO .\Objects\suband P
+>> RINT (.\Listings\suband.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\Bluetooth.obj (BLUETOOTH)
+  .\Objects\MPU9250.obj (MPU9250)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL_V5_C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\suband (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0018H     UNIT         ?DT?MAIN
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            DATA    0021H     0015H     UNIT         ?DT?MPU9250
+            DATA    0036H     0003H     UNIT         _DATA_GROUP_
+            DATA    0039H     0001H     UNIT         ?DT?BLUETOOTH
+            IDATA   003AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0020H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+                    0026H     07DAH                  *** GAP ***
+            CODE    0800H     009DH     UNIT         ?PR?MPU_READ6AXIS?MPU9250
+            CODE    089DH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0929H     006AH     UNIT         ?PR?MPU_READMAG?MPU9250
+            CODE    0993H     0061H     UNIT         ?PR?BT_SENDAXISDATA?MAIN
+            CODE    09F4H     0050H     UNIT         ?PR?_IIC_MPU_WRITE_BYTE?MPU9250
+            CODE    0A44H     0046H     UNIT         ?C?LIB_CODE
+            CODE    0A8AH     003BH     UNIT         ?PR?MPU_INIT?MPU9250
+            CODE    0AC5H     0035H     UNIT         ?PR?IIC_MPU_READ_BYTE?MPU9250
+            CODE    0AFAH     002FH     UNIT         ?PR?IIC_MPU_WRITE_ECHO?MPU9250
+            CODE    0B29H     0025H     UNIT         ?PR?_BLUETOOTH_SENDBUFFER?BLUETOOTH
+            CODE    0B4EH     001FH     UNIT         ?PR?IIC_MPU_READ_ECHO?MPU9250
+            CODE    0B6DH     001EH     UNIT         ?C_INITSEG
+            CODE    0B8BH     001DH     UNIT         ?PR?CRC?MAIN
+            CODE    0BA8H     001DH     UNIT         ?PR?IIC_MPU_START?MPU9250
+            CODE    0BC5H     001DH     UNIT         ?PR?IIC_MPU_END?MPU9250
+            CODE    0BE2H     001AH     UNIT         ?PR?_IIC_MPU_READ_DATA?MPU9250
+            CODE    0BFCH     0017H     UNIT         ?PR?BLUETOOTH_INIT?BLUETOOTH
+            CODE    0C13H     0017H     UNIT         ?PR?_IIC_MPU_WRITE_DATA?MPU9250
+            CODE    0C2AH     0015H     UNIT         ?PR?_AK8963_READREG?MPU9250
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 2
+
+
+            CODE    0C3FH     0014H     UNIT         ?PR?_AK8963_WRITEREG?MPU9250
+            CODE    0C53H     0013H     UNIT         ?PR?_BLUETOOTH_SENDSTRING?BLUETOOTH
+            CODE    0C66H     0011H     UNIT         ?PR?MAIN?MAIN
+            CODE    0C77H     000FH     UNIT         ?PR?DELAY200US?MPU9250
+            CODE    0C86H     000EH     UNIT         ?PR?UART?BLUETOOTH
+            CODE    0C94H     000AH     UNIT         ?PR?_BLUETOOTH_SENDBYTE?BLUETOOTH
+            CODE    0C9EH     0003H     UNIT         ?PR?_MPU_READREGISTER?MPU9250
+            CODE    0CA1H     0003H     UNIT         ?PR?_AK8963_READREGISTER?MPU9250
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\suband (MAIN)
+
+
+SEGMENT                                        BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                       START    LENGTH     START    LENGTH
+-------------------------------------------------------------------------------
+?C_C51STARTUP                               -----    -----      -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                               -----    -----      -----    -----
+  +--> ?PR?BLUETOOTH_INIT?BLUETOOTH
+  +--> ?PR?MPU_INIT?MPU9250
+  +--> ?PR?MPU_READ6AXIS?MPU9250
+  +--> ?PR?MPU_READMAG?MPU9250
+  +--> ?PR?BT_SENDAXISDATA?MAIN
+
+?PR?MPU_INIT?MPU9250                        -----    -----      -----    -----
+  +--> ?PR?_IIC_MPU_WRITE_DATA?MPU9250
+  +--> ?PR?_AK8963_WRITEREG?MPU9250
+
+?PR?_IIC_MPU_WRITE_DATA?MPU9250             -----    -----      -----    -----
+  +--> ?PR?IIC_MPU_START?MPU9250
+  +--> ?PR?IIC_MPU_END?MPU9250
+
+?PR?_AK8963_WRITEREG?MPU9250                -----    -----      -----    -----
+  +--> ?PR?_IIC_MPU_WRITE_BYTE?MPU9250
+  +--> ?PR?IIC_MPU_END?MPU9250
+
+?PR?_IIC_MPU_WRITE_BYTE?MPU9250             -----    -----      -----    -----
+  +--> ?PR?_IIC_MPU_WRITE_DATA?MPU9250
+  +--> ?PR?IIC_MPU_START?MPU9250
+  +--> ?PR?IIC_MPU_READ_ECHO?MPU9250
+
+?PR?MPU_READ6AXIS?MPU9250                   -----    -----      -----    -----
+  +--> ?PR?_IIC_MPU_READ_DATA?MPU9250
+
+?PR?_IIC_MPU_READ_DATA?MPU9250              -----    -----      -----    -----
+  +--> ?PR?IIC_MPU_START?MPU9250
+  +--> ?PR?_IIC_MPU_WRITE_BYTE?MPU9250
+  +--> ?PR?IIC_MPU_WRITE_ECHO?MPU9250
+  +--> ?PR?IIC_MPU_END?MPU9250
+
+?PR?IIC_MPU_WRITE_ECHO?MPU9250              0020H.0  0000H.1    -----    -----
+  +--> ?PR?_IIC_MPU_WRITE_BYTE?MPU9250
+  +--> ?PR?IIC_MPU_READ_BYTE?MPU9250
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 3
+
+
+
+?PR?MPU_READMAG?MPU9250                     -----    -----      -----    -----
+  +--> ?PR?_AK8963_WRITEREG?MPU9250
+  +--> ?PR?DELAY200US?MPU9250
+  +--> ?PR?_AK8963_READREG?MPU9250
+
+?PR?_AK8963_READREG?MPU9250                 -----    -----      -----    -----
+  +--> ?PR?_IIC_MPU_WRITE_BYTE?MPU9250
+  +--> ?PR?IIC_MPU_START?MPU9250
+  +--> ?PR?IIC_MPU_WRITE_ECHO?MPU9250
+  +--> ?PR?IIC_MPU_END?MPU9250
+
+?PR?BT_SENDAXISDATA?MAIN                    -----    -----      -----    -----
+  +--> ?PR?CRC?MAIN
+  +--> ?PR?_BLUETOOTH_SENDBUFFER?BLUETOOTH
+
+?PR?_BLUETOOTH_SENDBUFFER?BLUETOOTH         -----    -----      0036H    0003H
+  +--> ?PR?_BLUETOOTH_SENDBYTE?BLUETOOTH
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\suband (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  C:0993H         PUBLIC        BT_SendAxisData
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:0C66H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0B8BH         PUBLIC        CRC
+  D:0008H         PUBLIC        DataBuffer
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0C66H         LINE#         19
+  C:0C66H         LINE#         20
+  C:0C66H         LINE#         25
+  C:0C69H         LINE#         26
+  C:0C6CH         LINE#         27
+  C:0C6CH         LINE#         28
+  C:0C6CH         LINE#         29
+  C:0C6FH         LINE#         30
+  C:0C72H         LINE#         31
+  C:0C75H         LINE#         32
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 4
+
+
+  -------         ENDPROC       MAIN
+  -------         PROC          CRC
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        res
+  -------         ENDDO         
+  C:0B8BH         LINE#         59
+  C:0B8BH         LINE#         60
+  C:0B8DH         LINE#         61
+  C:0B8FH         LINE#         62
+  C:0B99H         LINE#         63
+  C:0BA3H         LINE#         64
+  C:0BA5H         LINE#         65
+  C:0BA7H         LINE#         66
+  -------         ENDPROC       CRC
+  -------         PROC          BT_SENDAXISDATA
+  C:0993H         LINE#         67
+  C:0993H         LINE#         95
+  C:0996H         LINE#         96
+  C:0999H         LINE#         97
+  C:099CH         LINE#         98
+  C:09A0H         LINE#         99
+  C:09A4H         LINE#         100
+  C:09A8H         LINE#         101
+  C:09ACH         LINE#         102
+  C:09B0H         LINE#         103
+  C:09B4H         LINE#         104
+  C:09B8H         LINE#         105
+  C:09BCH         LINE#         106
+  C:09C0H         LINE#         107
+  C:09C4H         LINE#         108
+  C:09C8H         LINE#         109
+  C:09CCH         LINE#         110
+  C:09D0H         LINE#         111
+  C:09D4H         LINE#         112
+  C:09D8H         LINE#         113
+  C:09DCH         LINE#         114
+  C:09E4H         LINE#         116
+  C:09E9H         LINE#         117
+  -------         ENDPROC       BT_SENDAXISDATA
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        BLUETOOTH
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  B:00A8H.7       PUBLIC        EA
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  C:0B29H         PUBLIC        _Bluetooth_SendBuffer
+  D:00A8H         PUBLIC        IE
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 5
+
+
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:0C86H         PUBLIC        Uart
+  D:00D8H         PUBLIC        CCON
+  C:0C53H         PUBLIC        _Bluetooth_SendString
+  D:0099H         PUBLIC        SBUF
+  C:0BFCH         PUBLIC        Bluetooth_Init
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0C94H         PUBLIC        _Bluetooth_SendByte
+  D:008EH         PUBLIC        AUXR
+  D:00D6H         PUBLIC        T2H
+  D:0039H         PUBLIC        UartSendBusy
+  D:00D7H         PUBLIC        T2L
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          BLUETOOTH_INIT
+  C:0BFCH         LINE#         4
+  C:0BFCH         LINE#         5
+  C:0BFCH         LINE#         6
+  C:0BFFH         LINE#         7
+  C:0C02H         LINE#         8
+  C:0C05H         LINE#         9
+  C:0C08H         LINE#         10
+  C:0C0BH         LINE#         11
+  C:0C0EH         LINE#         12
+  C:0C10H         LINE#         13
+  C:0C12H         LINE#         14
+  -------         ENDPROC       BLUETOOTH_INIT
+  -------         PROC          UART
+  C:0C86H         LINE#         15
+  C:0C86H         LINE#         17
+  C:0C89H         LINE#         18
+  C:0C89H         LINE#         19
+  C:0C8BH         LINE#         20
+  C:0C8BH         LINE#         21
+  C:0C8EH         LINE#         22
+  C:0C8EH         LINE#         23
+  C:0C90H         LINE#         24
+  C:0C93H         LINE#         25
+  C:0C93H         LINE#         26
+  -------         ENDPROC       UART
+  -------         PROC          _BLUETOOTH_SENDBYTE
+  D:0007H         SYMBOL        dat
+  C:0C94H         LINE#         27
+  C:0C94H         LINE#         28
+  C:0C94H         LINE#         29
+  C:0C98H         LINE#         30
+  C:0C9AH         LINE#         31
+  C:0C9DH         LINE#         32
+  -------         ENDPROC       _BLUETOOTH_SENDBYTE
+  -------         PROC          _BLUETOOTH_SENDSTRING
+  D:0001H         SYMBOL        str
+  C:0C53H         LINE#         33
+  C:0C53H         LINE#         34
+  C:0C53H         LINE#         35
+  C:0C59H         LINE#         36
+  C:0C5CH         LINE#         37
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 6
+
+
+  C:0C63H         LINE#         38
+  C:0C65H         LINE#         39
+  -------         ENDPROC       _BLUETOOTH_SENDSTRING
+  -------         PROC          _BLUETOOTH_SENDBUFFER
+  D:0036H         SYMBOL        buf
+  D:0005H         SYMBOL        length
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0B29H         LINE#         40
+  C:0B2FH         LINE#         41
+  C:0B31H         LINE#         42
+  C:0B36H         LINE#         43
+  C:0B4BH         LINE#         44
+  C:0B4DH         LINE#         45
+  -------         ENDPROC       _BLUETOOTH_SENDBUFFER
+  -------         ENDMOD        BLUETOOTH
+
+  -------         MODULE        MPU9250
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  C:0AC5H         PUBLIC        iic_mpu_read_byte
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0BC5H         PUBLIC        iic_mpu_end
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  D:0021H         PUBLIC        magX
+  D:0023H         PUBLIC        magY
+  C:0A00H         PUBLIC        _iic_mpu_write_byte
+  D:0025H         PUBLIC        magZ
+  C:0CA1H         PUBLIC        _AK8963_ReadRegister
+  D:00B8H         PUBLIC        IP
+  D:0027H         PUBLIC        gyroX
+  B:00D0H.7       PUBLIC        CY
+  C:0C9EH         PUBLIC        _MPU_ReadRegister
+  D:0029H         PUBLIC        gyroY
+  D:002BH         PUBLIC        gyroZ
+  C:0800H         PUBLIC        MPU_Read6Axis
+  D:00D8H         PUBLIC        CCON
+  B:0090H.4       PUBLIC        MPU_SDA
+  D:002DH         PUBLIC        ASAX
+  D:002EH         PUBLIC        ASAY
+  D:002FH         PUBLIC        ASAZ
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0090H.3       PUBLIC        MPU_SCL
+  D:0030H         PUBLIC        accelX
+  D:0032H         PUBLIC        accelY
+  D:0034H         PUBLIC        accelZ
+  C:0C2AH         PUBLIC        _AK8963_ReadReg
+  C:0BE2H         PUBLIC        _iic_mpu_read_data
+  C:0929H         PUBLIC        MPU_ReadMag
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 7
+
+
+  C:0A8AH         PUBLIC        MPU_Init
+  C:0B4EH         PUBLIC        iic_mpu_read_echo
+  C:0C77H         PUBLIC        Delay200us
+  B:00D0H.5       PUBLIC        F0
+  C:0C13H         PUBLIC        _iic_mpu_write_data
+  C:0C3FH         PUBLIC        _AK8963_WriteReg
+  D:00D0H         PUBLIC        PSW
+  C:0B02H         PUBLIC        iic_mpu_write_echo
+  C:0BA8H         PUBLIC        iic_mpu_start
+  -------         PROC          IIC_MPU_START
+  C:0BA8H         LINE#         23
+  C:0BA8H         LINE#         24
+  C:0BA8H         LINE#         25
+  C:0BAAH         LINE#         26
+  C:0BACH         LINE#         27
+  C:0BB6H         LINE#         28
+  C:0BB8H         LINE#         29
+  C:0BC2H         LINE#         30
+  C:0BC4H         LINE#         31
+  -------         ENDPROC       IIC_MPU_START
+  -------         PROC          IIC_MPU_END
+  C:0BC5H         LINE#         38
+  C:0BC5H         LINE#         39
+  C:0BC5H         LINE#         40
+  C:0BC7H         LINE#         41
+  C:0BC9H         LINE#         42
+  C:0BD3H         LINE#         43
+  C:0BD5H         LINE#         44
+  C:0BDFH         LINE#         45
+  C:0BE1H         LINE#         46
+  -------         ENDPROC       IIC_MPU_END
+  -------         PROC          IIC_MPU_READ_ECHO
+  C:0B4EH         LINE#         54
+  C:0B4EH         LINE#         55
+  C:0B4EH         LINE#         56
+  C:0B58H         LINE#         57
+  C:0B5AH         LINE#         58
+  C:0B5EH         LINE#         59
+  C:0B68H         LINE#         60
+  C:0B6AH         LINE#         61
+  C:0B6CH         LINE#         62
+  -------         ENDPROC       IIC_MPU_READ_ECHO
+  -------         PROC          L?0040
+  -------         ENDPROC       L?0040
+  -------         PROC          IIC_MPU_WRITE_ECHO
+  B:0020H.0       SYMBOL        ack
+  C:0B02H         LINE#         68
+  C:0B02H         LINE#         69
+  C:0B02H         LINE#         70
+  C:0B06H         LINE#         71
+  C:0B10H         LINE#         72
+  C:0B12H         LINE#         73
+  C:0B1CH         LINE#         74
+  C:0B26H         LINE#         75
+  C:0B28H         LINE#         76
+  -------         ENDPROC       IIC_MPU_WRITE_ECHO
+  -------         PROC          IIC_MPU_READ_BYTE
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 8
+
+
+  -------         DO            
+  D:0007H         SYMBOL        dat
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0AC5H         LINE#         82
+  C:0AC5H         LINE#         83
+  C:0AC5H         LINE#         84
+  C:0AC7H         LINE#         85
+  C:0AC9H         LINE#         86
+  C:0AD4H         LINE#         87
+  C:0AD4H         LINE#         88
+  C:0AD8H         LINE#         89
+  C:0AE2H         LINE#         90
+  C:0AE4H         LINE#         91
+  C:0AEAH         LINE#         92
+  C:0AF4H         LINE#         93
+  C:0AF6H         LINE#         94
+  C:0AF9H         LINE#         95
+  C:0AF9H         LINE#         96
+  -------         ENDPROC       IIC_MPU_READ_BYTE
+  -------         PROC          L?0039
+  -------         ENDPROC       L?0039
+  -------         PROC          _IIC_MPU_WRITE_BYTE
+  D:0007H         SYMBOL        dat
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0A00H         LINE#         102
+  C:0A00H         LINE#         103
+  C:0A00H         LINE#         105
+  C:0A0CH         LINE#         106
+  C:0A0CH         LINE#         107
+  C:0A10H         LINE#         108
+  C:0A12H         LINE#         109
+  C:0A1CH         LINE#         110
+  C:0A1EH         LINE#         111
+  C:0A28H         LINE#         112
+  C:0A32H         LINE#         113
+  C:0A34H         LINE#         114
+  C:0A3EH         LINE#         115
+  C:0A41H         LINE#         116
+  -------         ENDPROC       _IIC_MPU_WRITE_BYTE
+  -------         PROC          _IIC_MPU_READ_DATA
+  D:0005H         SYMBOL        addr
+  -------         DO            
+  D:0007H         SYMBOL        REG_data
+  -------         ENDDO         
+  C:0BE2H         LINE#         121
+  C:0BE4H         LINE#         122
+  C:0BE4H         LINE#         124
+  C:0BE7H         LINE#         125
+  C:0BECH         LINE#         126
+  C:0BF1H         LINE#         127
+  C:0BF4H         LINE#         128
+  C:0BF6H         LINE#         129
+  C:0BF6H         LINE#         130
+  C:0BF9H         LINE#         131
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 9
+
+
+  -------         ENDPROC       _IIC_MPU_READ_DATA
+  -------         PROC          _IIC_MPU_WRITE_DATA
+  D:0004H         SYMBOL        Address
+  D:0005H         SYMBOL        dat
+  C:0C13H         LINE#         137
+  C:0C15H         LINE#         138
+  C:0C15H         LINE#         139
+  C:0C18H         LINE#         140
+  C:0C1DH         LINE#         141
+  C:0C22H         LINE#         142
+  C:0C27H         LINE#         143
+  -------         ENDPROC       _IIC_MPU_WRITE_DATA
+  -------         PROC          DELAY200US
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  D:0005H         SYMBOL        k
+  -------         ENDDO         
+  C:0C77H         LINE#         146
+  C:0C77H         LINE#         147
+  C:0C77H         LINE#         150
+  C:0C78H         LINE#         151
+  C:0C79H         LINE#         152
+  C:0C7BH         LINE#         153
+  C:0C7DH         LINE#         154
+  C:0C7FH         LINE#         156
+  C:0C7FH         LINE#         158
+  C:0C7FH         LINE#         159
+  C:0C81H         LINE#         160
+  C:0C83H         LINE#         161
+  C:0C85H         LINE#         162
+  -------         ENDPROC       DELAY200US
+  -------         PROC          _AK8963_READREG
+  D:0003H         SYMBOL        addr
+  -------         DO            
+  D:0007H         SYMBOL        REG_data
+  -------         ENDDO         
+  C:0C2AH         LINE#         164
+  C:0C2CH         LINE#         165
+  C:0C2CH         LINE#         167
+  C:0C2CH         LINE#         168
+  C:0C2CH         LINE#         169
+  C:0C2FH         LINE#         170
+  C:0C34H         LINE#         171
+  C:0C37H         LINE#         172
+  C:0C39H         LINE#         173
+  C:0C39H         LINE#         174
+  C:0C3CH         LINE#         175
+  -------         ENDPROC       _AK8963_READREG
+  -------         PROC          _AK8963_WRITEREG
+  D:0002H         SYMBOL        Address
+  D:0003H         SYMBOL        dat
+  C:0C3FH         LINE#         178
+  C:0C43H         LINE#         179
+  C:0C43H         LINE#         180
+  C:0C43H         LINE#         181
+  C:0C43H         LINE#         182
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 10
+
+
+  C:0C46H         LINE#         183
+  C:0C4BH         LINE#         184
+  C:0C50H         LINE#         185
+  -------         ENDPROC       _AK8963_WRITEREG
+  -------         PROC          MPU_INIT
+  -------         DO            
+  D:0001H         SYMBOL        i
+  D:0003H         SYMBOL        j
+  D:0002H         SYMBOL        k
+  -------         ENDDO         
+  C:0A8AH         LINE#         188
+  C:0A8AH         LINE#         189
+  C:0A8AH         LINE#         190
+  C:0A90H         LINE#         191
+  C:0A97H         LINE#         193
+  C:0A97H         LINE#         195
+  C:0A97H         LINE#         196
+  C:0A99H         LINE#         197
+  C:0A9BH         LINE#         198
+  C:0A9DH         LINE#         200
+  C:0AA4H         LINE#         201
+  C:0AA9H         LINE#         202
+  C:0AB0H         LINE#         203
+  C:0AB7H         LINE#         204
+  C:0ABEH         LINE#         205
+  -------         ENDPROC       MPU_INIT
+  -------         PROC          MPU_READ6AXIS
+  -------         DO            
+  D:0004H         SYMBOL        H
+  D:0005H         SYMBOL        L
+  -------         ENDDO         
+  C:0800H         LINE#         207
+  C:0800H         LINE#         208
+  C:0800H         LINE#         210
+  C:0807H         LINE#         211
+  C:080EH         LINE#         212
+  C:081AH         LINE#         213
+  C:0821H         LINE#         214
+  C:0828H         LINE#         215
+  C:0834H         LINE#         216
+  C:083BH         LINE#         217
+  C:0842H         LINE#         218
+  C:084EH         LINE#         219
+  C:0855H         LINE#         220
+  C:085CH         LINE#         221
+  C:0868H         LINE#         222
+  C:086FH         LINE#         223
+  C:0876H         LINE#         224
+  C:0882H         LINE#         225
+  C:0889H         LINE#         226
+  C:0890H         LINE#         227
+  C:089CH         LINE#         228
+  -------         ENDPROC       MPU_READ6AXIS
+  -------         PROC          _MPU_READREGISTER
+  D:0007H         SYMBOL        addr
+  C:0C9EH         LINE#         230
+  C:0C9EH         LINE#         231
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/09/2020  11:26:38  PAGE 11
+
+
+  -------         ENDPROC       _MPU_READREGISTER
+  -------         PROC          _AK8963_READREGISTER
+  D:0007H         SYMBOL        addr
+  C:0CA1H         LINE#         233
+  C:0CA1H         LINE#         234
+  -------         ENDPROC       _AK8963_READREGISTER
+  -------         PROC          MPU_READMAG
+  -------         DO            
+  D:0002H         SYMBOL        L
+  D:0007H         SYMBOL        H
+  -------         ENDDO         
+  C:0929H         LINE#         244
+  C:0929H         LINE#         245
+  C:0929H         LINE#         247
+  C:0930H         LINE#         248
+  C:0933H         LINE#         249
+  C:093AH         LINE#         250
+  C:093FH         LINE#         251
+  C:094CH         LINE#         252
+  C:0953H         LINE#         253
+  C:0958H         LINE#         254
+  C:0965H         LINE#         255
+  C:096CH         LINE#         256
+  C:0971H         LINE#         257
+  C:097DH         LINE#         258
+  C:0984H         LINE#         259
+  C:098BH         LINE#         260
+  C:0992H         LINE#         261
+  -------         ENDPROC       MPU_READMAG
+  -------         ENDMOD        MPU9250
+
+  -------         MODULE        ?C?CLDPTR
+  C:0A44H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:0A5DH         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_BLUETOOTH_SENDSTRING?BLUETOOTH
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MPU_READREGISTER?MPU9250
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_AK8963_READREGISTER?MPU9250
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 03D4H BYTE (47%) *
+******************************************************************************
+
+Program Size: data=58.1 xdata=0 code=1194
+LINK/LOCATE RUN COMPLETE.  3 WARNING(S),  0 ERROR(S)

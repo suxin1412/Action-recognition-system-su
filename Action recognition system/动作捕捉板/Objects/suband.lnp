@@ -1,0 +1,5 @@
+".\Objects\main.obj",
+".\Objects\Bluetooth.obj",
+".\Objects\MPU9250.obj" 
+TO ".\Objects\suband" 
+PRINT(".\Listings\suband.m51") RAMSIZE(256) 

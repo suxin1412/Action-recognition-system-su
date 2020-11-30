@@ -1,0 +1,71 @@
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         11/09/2020 11:26:37 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BLUETOOTH
+OBJECT MODULE PLACED IN .\Objects\Bluetooth.obj
+COMPILER INVOKED BY: C:\Keil_v5_c51\C51\BIN\C51.EXE User\Bluetooth.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.
+                    -\Listings\Bluetooth.lst) TABS(2) OBJECT(.\Objects\Bluetooth.obj)
+
+line level    source
+
+   1          #include <STC15F2K60S2.H>
+   2          #include "Bluetooth.h"
+   3          unsigned char  UartSendBusy = 0;
+   4          void Bluetooth_Init(void)   //115200bps@20.000MHz
+   5          {
+   6   1        SCON = 0x50;  
+   7   1        AUXR |= 0x01; 
+   8   1        AUXR |= 0x04; 
+   9   1        T2L = 0xD5;   
+  10   1        T2H = 0xFF;   
+  11   1        AUXR |= 0x10;   //Æô¶¯T2
+  12   1        ES = 1;
+  13   1        EA = 1;
+  14   1      }
+  15          void Uart() interrupt 4
+  16          {
+  17   1          if (RI)
+  18   1          {
+  19   2              RI = 0;                 //??RI?
+  20   2          }
+  21   1          if (TI)
+  22   1          {
+  23   2              TI = 0;                 //??TI?
+  24   2              UartSendBusy = 0;               //????
+  25   2          }
+  26   1      }
+  27          void Bluetooth_SendByte(int8_t dat)
+  28          {
+  29   1        while (UartSendBusy);
+  30   1        SBUF = dat;
+  31   1        UartSendBusy = 1;
+  32   1      }
+  33          void Bluetooth_SendString(char *str)
+  34          {
+  35   1        while (*str){
+  36   2          Bluetooth_SendByte(*str);
+  37   2          str++;
+  38   2        }
+  39   1      }
+  40          void Bluetooth_SendBuffer(uint8_t *buf, uint8_t length){
+  41   1        uint8_t i = 0;
+  42   1        while (i<length){
+  43   2          Bluetooth_SendByte(buf[i++]);
+  44   2        }
+  45   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    103    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       3
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         11/09/2020 11:26:37 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
